@@ -55,6 +55,11 @@ class Persona extends \yii\db\ActiveRecord
         return $this->hasMany(Ficha::className(), ['director_id' => 'id']);
     }
 
+    public function getReparto()
+    {
+        return $this->hasMany(Reparto::className(), ['director_id' => 'id']);
+    }
+
     /**
      * @return \yii\db\ActiveQuery
      */

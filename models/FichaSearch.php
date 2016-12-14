@@ -18,8 +18,8 @@ class FichaSearch extends Ficha
     public function rules()
     {
         return [
-            [['id', 'duracion', 'director_id'], 'integer'],
-            [['titulo'], 'safe'],
+            [['id', 'duracion', ], 'integer'],
+            [['titulo','director_id'], 'safe'],
             [['anyo'], 'number'],
         ];
     }
@@ -42,7 +42,7 @@ class FichaSearch extends Ficha
      */
     public function search($params)
     {
-        $query = Ficha::find();
+        $query = Ficha::find()->joinWith('director');
 
         // add conditions that should always apply here
 
@@ -66,7 +66,8 @@ class FichaSearch extends Ficha
             'director_id' => $this->director_id,
         ]);
 
-        $query->andFilterWhere(['like', 'titulo', $this->titulo]);
+        $query->andFilterWhere(['like', 'titulo', $this->titulo])
+        ->andFilterWhere(['ilake','personas.nombre',$this->director_id]);
 
         return $dataProvider;
     }
